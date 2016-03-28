@@ -17,7 +17,7 @@ public abstract class Joueur {
 	 */
 	public boolean verifCarre(int [][] jeu, int numl, int numc){
 		
-		//Cas numl = Paire numc = Impair ==> - 
+		//Cas numl = Paire && numc = Impair ==> -
 		if(numl%2==0 && numc%2!=0){
 			if(numl==0){
 				if(jeu[numl+1][numc-1]==1 && jeu[numl+1][numc+1]==1 && jeu[numl+2][numc]==1 && jeu[numl+1][numc]==0){
@@ -47,7 +47,7 @@ public abstract class Joueur {
 					}
 				}
 			}
-		//Cas numl = Impair numc = Paire ==> |
+		//Cas numl = Impair && numc = Paire ==> |
 		}else{
 			if(numl%2!=0 && numc%2==0){
 				if(numc==0){

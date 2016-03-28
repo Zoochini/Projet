@@ -3,9 +3,17 @@ import java.util.*;
 public class ConfSimple implements Configuration {
 
     int val;
+    public ArrayList succ;
+    public String conf;//Configurer un toString plus simple ?
 
-    public ConfSimple(int val) {
-        this.val;
+    public ConfSimple(int val, Jeu conf) {
+        this.val = val;
+        this.conf = new String(conf.toString());
+
+        //On définit les successeurs de cette configuration
+        for(int i = 0; i<conf.tracePossible(); i++){
+            succ.add(new ConfSimple(0,conf.trace(i)));//à compléter pour définir les valeurs et les poids
+        }
     }
 
     @Override

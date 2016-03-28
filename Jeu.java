@@ -7,6 +7,7 @@ public class Jeu {
 	
 	private int[][] jeu;
 
+	//initialise le jeu
 	public Jeu(String type, int nblignes, int nbcolonnes){
 		jeu = new int[nblignes*2+1][nbcolonnes*2+1];
 		for(int i=0;i<jeu[0].length;i++){
@@ -27,7 +28,20 @@ public class Jeu {
 			}
 		}
 	}
-	
+
+	//Renvoie une copie du plateau en paramètre
+	public Jeu(Jeu plateau){
+		this.jeu = new int[plateau.jeu.length][plateau.jeu[0].length];
+		for(int i=0;i<jeu.length;i++){
+			for(int j=0;j<jeu[0].length;j++){
+				if(plateau.jeu[i][j]==1){
+					jeu[i][j]=plateau.jeu[i][j];
+				}
+			}
+		}
+	}
+
+	//Affiche la situation de la partie
 	public void afficher(){
 		for(int i=0;i<jeu.length;i++){
 			for(int j=0;j<jeu[0].length;j++){
@@ -65,5 +79,54 @@ public class Jeu {
 			}
 			System.out.println();
 		}
+	}
+
+	//Renvoie le nombre de coup possibles à jouer
+	public int tracePossible(){
+		int nombreCoup = 0;
+		for(int i=0; i<jeu.length;i++){
+			for(int j=0; j<jeu[0].length;j++){
+				if(jeu[i][j]==0){
+					if(i%2==0){
+						if(j%2!=0){
+							nombreCoup++;
+						}
+					}else{
+						if(j%2==0){
+							nombreCoup++;
+						}
+					}
+				}
+			}
+		}
+		return nombreCoup;
+	}
+
+	//Trace le coup possible numéro "i" pour définir une nouvelle configuration
+	public Jeu trace(int n){
+		Jeu succ = new Jeu(this);
+		int i=0;
+		int j=0;
+		while(n!=0){
+			while(j<succ.jeu[0].length){
+				if(succ.jeu[i][j]==0){
+					n--;
+					if(n==0){
+						break;
+					}
+				}
+				j++;
+			}
+			j=0;
+			i++;
+		}
+		succ.jeu[i][j]=1;
+		succ.completion(i,j);
+		return succ;
+	}
+
+	//Complète tous les carrées possible à faire dans le tour du même joueur(sert à définir une nouvelle configuration)
+	public void completion(int numl,int numc){
+
 	}
 }
