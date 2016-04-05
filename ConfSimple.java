@@ -4,11 +4,11 @@ public class ConfSimple implements Configuration {
 
     int val;
     public ArrayList succ;
-    public String conf;//Configurer un toString plus simple ?
+    public Jeu conf;
 
     public ConfSimple(int val, Jeu conf) {
         this.val = val;
-        this.conf = new String(conf.toString());
+        this.conf = new Jeu(conf);
 
         //On définit les successeurs de cette configuration
         for(int i = 0; i<conf.tracePossible(); i++){
@@ -23,4 +23,6 @@ public class ConfSimple implements Configuration {
     public int ident(){
         return val;
     }
+
+
 }
