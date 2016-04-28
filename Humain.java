@@ -3,5 +3,5 @@
  */
 public interface Humain {
 
-    public void jouer();
+    public void jouer(Jeu j);
 }

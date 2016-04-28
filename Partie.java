@@ -12,7 +12,7 @@ public class Partie {
                 break;
 
             case "-h" :
-                System.out.println("Options duu programme : \n -name : affiche les noms et prénoms des personnes du groupe" +
+                System.out.println("Options du programme : \n -name : affiche les noms et prénoms des personnes du groupe" +
                         "\n -h : Rappelle la liste des options du programme\n -graphe type nblignes nbcolonnes : renvoie le graphe des config au format dot" +
                         "\n -joue strategie : offre la possibilité de jouer sur la console de manière interactive" +
                         "\n -cal stratégie : calcule une stratégie optimum face à un joueur suivant la stratégie passé en paramètre (renvoie le résultat au format pip)" +

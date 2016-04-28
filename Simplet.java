@@ -1,30 +1,27 @@
 
-public class Simplet extends Joueur{
+public class Simplet implements IA{
+
+	int carreObtenu;
 
 	public Simplet(){
-		super("Simplet");
+		carreObtenu=0;
 	}
 	
-	public void jouer(int[][] jeu){
+	public void jouer(Jeu jeu){
 		int nbVide=0;
-		for(int i=1; i<jeu.length; i+=2){
-			for(int j=1; j<jeu[0].length; j+=2){
-				if(jeu[i][j]==0){
-					nbVide++;
-				}
+		int i =0;
+		while(i<jeu.plateau.length()){
+			if(jeu.plateau.charAt(i)=='0'){
+				nbVide++;
 			}
 		}
 		int random = (int )(Math.random() * nbVide + 1);
-		for(int i=1; i<jeu.length; i+=2){
-			for(int j=1; j<jeu[0].length; j+=2){
-				if(jeu[i][j]==0){
-					nbVide--;
-					if(nbVide==random){
-						jeu[i][j]=1;
-						return;
-					}
-				}
+		i=0;
+		while(random!=0){
+			if(jeu.plateau.charAt(i)=='0'){
+				random--;
 			}
 		}
+		jeu.jouer(i);
 	}
 }
