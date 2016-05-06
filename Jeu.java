@@ -12,7 +12,7 @@ public class Jeu {
 
 	//Constructeur
 
-	private Jeu (String type,int nbl, int nbc){
+	public Jeu (String type,int nbl, int nbc){
 		this.nbl = nbl;
 		this.nbc = nbc;
 		if(type.equals("Vide")){
@@ -101,10 +101,103 @@ public class Jeu {
 		plateau = replaceCharAt(plateau,pos,'1');
 	}
 
+	public int tracePossible(){
+		int tp = 0;
+		int l = plateau.length();
+		for(int i = 0; i<l; i++){
+			if(plateau.charAt(i)=='0'){
+				tp++;
+			}
+		}
+		return tp;
+	}
+
+	public Jeu trace(int numero0){
+		int i = 0;
+		while(numero0!=0){
+			if(plateau.charAt(i)=='0'){
+				numero0--;
+			}
+			i++;
+		}
+		i--;//On decremente la position de i de 1 pour ne pas se trouver à la position situé après l'endroit où l'on souhaite jouer
+		Jeu newConf = new Jeu(this);
+		replaceCharAt(newConf.plateau,i,'1');
+		newConf.completerCarre();
+		return newConf;
+	}
+
+	public void completerCarre(){//a fignoler (repetition de code)
+		for(int i=0; i<nbl*2-1;i++){
+			if(i%2==0){
+				for(int j=0; j<nbc+1;j++){
+					//Ligne paire
+					if(i==0){
+						if(plateau.charAt(j)=='1' && plateau.charAt(nbc+1+j)=='1' && plateau.charAt(nbc+3+j)=='1'){
+							replaceCharAt(plateau,nbc+2+j,'1');
+						}
+					}else{
+						if(i==nbl*2-2){
+							if(plateau.charAt((nbl/2+1)*(nbc+1)+(nbl/2+1)*(nbc+2)+j)=='1' && plateau.charAt((nbl/2+1)*(nbc+1)+(nbl/2)*(nbc+2)+j)=='1' && plateau.charAt((nbl/2+1)*(nbc+1)+(nbl/2)*(nbc+2)+j+3)=='1'){
+								replaceCharAt(plateau,(nbl/2+1)*(nbc+1)+(nbl/2)*(nbc+2)+j+2,'1');
+							}
+						}else{//Cas vers le bas
+							if(plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+j+1)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+j+1)=='1'  && plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+j+2)=='1'){
+								replaceCharAt(plateau,(i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+j+1,'1');
+							}else{
+								if(plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+j+1)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2-1)*(nbc+2)+j+1)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2-1)*(nbc+2)+j+2)=='1'){
+									replaceCharAt(plateau,(i/2-1)*(nbc+1)+(i/2-1)*(nbc+2)+j+1,'1');
+								}
+							}
+						}
+					}
+				}
+			}else{
+				for(int j=0; j<nbc*2-1;j++){
+					//Ligne impaire
+					if(j==0){
+						if(plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+1)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+1)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+1)=='1'){
+							replaceCharAt(plateau,(i/2+1)*(nbc+1)+(i/2)*(nbc+2)+2,'1');
+						}else{
+							if(j==nbc*2-2){
+								if(plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+1+j)=='1'){
+									replaceCharAt(plateau,(i/2+1)*(nbc+1)+(i/2)*(nbc+2)+2+j,'1');
+								}
+							}else{
+								if(plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+1+j)=='1'){
+									replaceCharAt(plateau,(i/2+1)*(nbc+1)+(i/2)*(nbc+2)+2+j,'1');
+								}else{
+									if(plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+1)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+1)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+1)=='1'){
+										replaceCharAt(plateau,(i/2+1)*(nbc+1)+(i/2)*(nbc+2)+2,'1');
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public int nbCarre(){
+		int nbCarre = 0;
+		for(int i=0; i<nbl*2-2;i+=2){
+			for(int j=0;j<nbc+1;j++){
+				if(plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+j+1)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+j+1)=='1'  && plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+j+2)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+j+1)=='1'){
+					nbCarre++;
+				}
+			}
+		}
+		return nbCarre;
+	}
+
+	public boolean equals(Jeu j){
+		return nbl==j.nbl && nbc==j.nbc && plateau.equals(j.plateau);
+	}
+
 	public String toString(){
 		String s = "";
 		int cpt = 0;
-		int x = (nbl+1)*nbc + nbl*(nbc+1);
 		int y;
 		for(int i=0; i<2*nbl+1; i++){
 			if(i%2 == 0){

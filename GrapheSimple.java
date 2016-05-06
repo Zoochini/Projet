@@ -6,10 +6,10 @@ import java.util.*;
  */
 
 public class GrapheSimple implements Graphe {
-    Configuration initial;
+    HashMap<Integer,Configuration> g;
 
     public GraphSimple(String type,Jeu jeu){
-        initial = new ConfSimple(0,jeu);
+        this.g = HashMap(Map<Integer,Configuration> g) ;
 
     }
     public Iterator<Integer> action(Configuration c);
