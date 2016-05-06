@@ -24,9 +24,7 @@ public class Partie {
                 int nblignes = Integer.parseInt(args[2]);//Faire fonctions définir jeu
                 int nbcolonnes = Integer.parseInt(args[3]);
                 Jeu j = DefJeu(args[1],args[2],args[3]);
-                Graphe g = new Graphe(j);
-                g.toDot();
-                break;
+                GrapheSimple g = new GrapheSimple(j);
 
             case "-joue" :
                 Humain h = new Joueur();
@@ -44,7 +42,7 @@ public class Partie {
                         break;
 
                     case "-idiot" :
-                        IA i = new idiot();
+                        IA i = new Idiot();
                         Jeu j = DefJeu(args[2],args[3],args[4]);
                         j.jouer(h,i);
                         break;
@@ -61,7 +59,10 @@ public class Partie {
 
                     default :
                         System.out.println("Mauvais parametre, réessayer avec de bons paramètres");
-                        break;
+                        break;                Graphe g = new Graphe(j);
+                g.toDot();
+                break;
+
                 }
                 break;
 
