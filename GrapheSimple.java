@@ -16,21 +16,21 @@ public class GrapheSimple implements Graphe {
         this.defGraphe(0);
     }
 
-    public void defGraphe(Integer i){
-        if(i<g.size()){
+    public void defGraphe(Integer k){
+        if(k<g.size()){
             int j = g.size();
-            Configuration c = g.get(i);
+            Configuration c = g.get(k);
             for(int i=0; i<c.succ.size(); i++){
                 if(!g.containsValue(c.succ.get(i))){
                     g.put(j,c.succ.get(i));
                     j++;
                 }
             }
-            this.defGraphe(i+1);
+            this.defGraphe(k+1);
         }
     }
 
-    public void toDot(int nbl, int nbc) throws IOException {
+    public void toDot(int nbl, int nbc) throws IOException{
         File f = new File("C"+nbl+"x"+nbc+".dot");
         f.createNewFile();
         PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(f)));
@@ -52,9 +52,16 @@ public class GrapheSimple implements Graphe {
             j=0;
         }
         pw.print("}");
+        pw.close();
     }
 
-    public void toPip(String type, int nbl, int nbc){
-
+    //A completer grace aux poids
+    public void toPip(String type, int nbl, int nbc) throws IOException{
+        File f = new File("C"+nbl+"x"+nbc+".pip");
+        f.createNewFile();
+        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(f)));
+        if(type.equals("0")){
+            pw.print()
+        }
     }
 }

@@ -3,5 +3,6 @@
  */
 public interface Humain {
 
+    int carreObtenu=0;
     public void jouer(Jeu j);
 }

@@ -1,9 +1,9 @@
 
-import java.util.*;
+import java.io.IOException;
 
 public class Partie {
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException {
 		
 		switch(args[0]){
 
@@ -25,25 +25,27 @@ public class Partie {
                 int nbcolonnes = Integer.parseInt(args[3]);
                 Jeu j = DefJeu(args[1],args[2],args[3]);
                 GrapheSimple g = new GrapheSimple(j);
+                g.toDot(nblignes,nbcolonnes);
+                break;
 
             case "-joue" :
                 Humain h = new Joueur();
                 switch(args[1]){
                     case "-simplet" :
                         IA s = new Simplet();
-                        Jeu j = DefJeu(args[2],args[3],args[4]);
-                        j.jouer(h,s);
+                        j = DefJeu(args[2], args[3], args[4]);
+                        jouer(h,s,j);
                         break;
 
                     case "-prevoyant" :
                         IA p = new Prevoyant();
-                        Jeu j = DefJeu(args[2],args[3],args[4]);
+                        j = DefJeu(args[2], args[3], args[4]);
                         j.jouer(h,p);
                         break;
 
                     case "-idiot" :
                         IA i = new Idiot();
-                        Jeu j = DefJeu(args[2],args[3],args[4]);
+                        j = DefJeu(args[2],args[3],args[4]);
                         j.jouer(h,i);
                         break;
 
@@ -51,7 +53,7 @@ public class Partie {
 
                     case "-pondere" :
                         IA po = new Pondere();
-                        Jeu j = DefJeu(args[2],args[3],args[4]);
+                        j = DefJeu(args[2],args[3],args[4]);
                         j.jouer(h,po);
                         break;
 
@@ -59,8 +61,7 @@ public class Partie {
 
                     default :
                         System.out.println("Mauvais parametre, réessayer avec de bons paramètres");
-                        break;                Graphe g = new Graphe(j);
-                g.toDot();
+                        break;
                 break;
 
                 }
@@ -89,5 +90,21 @@ public class Partie {
         int nbcolonnes = Integer.parseInt(argNbcolonnes);
         Jeu j = new Jeu(argType, nblignes, nbcolonnes);
         return j;
+    }
+
+    public static void jouer(Humain h, IA ia, Jeu j){
+        while(j.tracePossible()>0){
+            h.jouer(j);
+            ia.jouer(j);
+        }
+        if(h.carreObtenu>ia.carreObtenu){
+            System.out.println("Bravo vous avez gagne !\n");
+        }else{
+            if(h.carreObtenu<ia.carreObtenu){
+                System.out.println("Dommage vous avez perdu !\n");
+            }else{
+                System.out.println("Egalite entre vous !\n");
+            }
+        }
     }
 }

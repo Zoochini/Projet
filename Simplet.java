@@ -9,6 +9,7 @@ public class Simplet implements IA{
 	
 	public void jouer(Jeu jeu){
 		int nbVide=0;
+		int nbCarreBefore = jeu.nbCarre();
 		int i =0;
 		while(i<jeu.plateau.length()){
 			if(jeu.plateau.charAt(i)=='0'){
@@ -23,5 +24,9 @@ public class Simplet implements IA{
 			}
 		}
 		jeu.jouer(i);
+		if(nbCarreBefore<jeu.nbCarre()){
+			System.out.println("Simplet a complété un carré il rejoue\n");
+			carreObtenu++;
+		}
 	}
 }

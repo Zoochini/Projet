@@ -71,6 +71,7 @@ public class ConfSimple implements Configuration {
                 return i;
             }
         }
+        throw new IndexOutOfBoundsException("La cle n'existe pas.");
     }
 
     @Override

@@ -3,5 +3,6 @@
  */
 public interface IA {
 
+    int carreObtenu=0;
     public void jouer(Jeu jeu);
 }

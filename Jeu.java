@@ -86,13 +86,13 @@ public class Jeu {
 
 	public void jouer(int numeroLigne,int numeroColonne){//à vérifier
 		//Ligne paire
-		if(numeroLigne%2==0){
-			int position = (nbc+1)*(numeroLigne/2)+numeroColonne-1;
+		if((numeroLigne-1)%2==0){
+			int position = (numeroLigne/2)*(nbc+1)+(numeroLigne/2)*(nbc+2)+(numeroColonne-1)/2;
 			replaceCharAt(plateau,position,'1');
 		}
 		//Ligne impaire
 		else{
-			int position = (numeroLigne/2)*(nbc+1)+(numeroLigne/2)*(nbc+2);
+			int position = ((numeroLigne/2)+1)*(nbc+1)+(numeroLigne/2)*(nbc+2)+numeroColonne/2;
 			plateau = replaceCharAt(plateau,position,'1');
 		}
 	}
@@ -101,6 +101,8 @@ public class Jeu {
 		plateau = replaceCharAt(plateau,pos,'1');
 	}
 
+
+	//Renvoie le nombre de successeurs possibles pour une configuration sans gérer les symetrie permet egalement de savoir s'il reste un coup possible a jouer (le nombre de zero de la chaine)
 	public int tracePossible(){
 		int tp = 0;
 		int l = plateau.length();
@@ -112,6 +114,7 @@ public class Jeu {
 		return tp;
 	}
 
+	//Trace un trait a la position du x zero du plateau (numero0 ici represente x) permet donc de completer le plateau
 	public Jeu trace(int numero0){
 		int i = 0;
 		while(numero0!=0){
@@ -127,25 +130,26 @@ public class Jeu {
 		return newConf;
 	}
 
+	//Complete toutes les combinaisons de carre possible a completer sur le plateau
 	public void completerCarre(){//a fignoler (repetition de code)
 		for(int i=0; i<nbl*2-1;i++){
 			if(i%2==0){
 				for(int j=0; j<nbc+1;j++){
 					//Ligne paire
 					if(i==0){
-						if(plateau.charAt(j)=='1' && plateau.charAt(nbc+1+j)=='1' && plateau.charAt(nbc+3+j)=='1'){
+						if(plateau.charAt(j)=='1' && plateau.charAt(nbc+1+j)=='1' && plateau.charAt(nbc+3+j)=='1' && plateau.charAt(nbc+2+j)!=1){
 							replaceCharAt(plateau,nbc+2+j,'1');
 						}
 					}else{
 						if(i==nbl*2-2){
-							if(plateau.charAt((nbl/2+1)*(nbc+1)+(nbl/2+1)*(nbc+2)+j)=='1' && plateau.charAt((nbl/2+1)*(nbc+1)+(nbl/2)*(nbc+2)+j)=='1' && plateau.charAt((nbl/2+1)*(nbc+1)+(nbl/2)*(nbc+2)+j+3)=='1'){
+							if(plateau.charAt((nbl/2+1)*(nbc+1)+(nbl/2+1)*(nbc+2)+j)=='1' && plateau.charAt((nbl/2+1)*(nbc+1)+(nbl/2)*(nbc+2)+j)=='1' && plateau.charAt((nbl/2+1)*(nbc+1)+(nbl/2)*(nbc+2)+j+3)=='1' && plateau.charAt((nbl/2+1)*(nbc+1)+(nbl/2)*(nbc+2)+j+2)!=1){
 								replaceCharAt(plateau,(nbl/2+1)*(nbc+1)+(nbl/2)*(nbc+2)+j+2,'1');
 							}
 						}else{//Cas vers le bas
-							if(plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+j+1)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+j+1)=='1'  && plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+j+2)=='1'){
+							if(plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+j+1)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+j+1)=='1'  && plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+j+2)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+j+1)!=1){
 								replaceCharAt(plateau,(i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+j+1,'1');
 							}else{
-								if(plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+j+1)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2-1)*(nbc+2)+j+1)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2-1)*(nbc+2)+j+2)=='1'){
+								if(plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+j+1)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2-1)*(nbc+2)+j+1)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2-1)*(nbc+2)+j+2)=='1' && plateau.charAt((i/2-1)*(nbc+1)+(i/2-1)*(nbc+2)+j+1)!=1){
 									replaceCharAt(plateau,(i/2-1)*(nbc+1)+(i/2-1)*(nbc+2)+j+1,'1');
 								}
 							}
@@ -156,18 +160,18 @@ public class Jeu {
 				for(int j=0; j<nbc*2-1;j++){
 					//Ligne impaire
 					if(j==0){
-						if(plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+1)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+1)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+1)=='1'){
+						if(plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+1)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+1)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+1)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+2)=='1'){
 							replaceCharAt(plateau,(i/2+1)*(nbc+1)+(i/2)*(nbc+2)+2,'1');
 						}else{
 							if(j==nbc*2-2){
-								if(plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+1+j)=='1'){
+								if(plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+2+j)=='1'){
 									replaceCharAt(plateau,(i/2+1)*(nbc+1)+(i/2)*(nbc+2)+2+j,'1');
 								}
 							}else{
-								if(plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+1+j)=='1'){
+								if(plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+1+j)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+2+j)=='1'){
 									replaceCharAt(plateau,(i/2+1)*(nbc+1)+(i/2)*(nbc+2)+2+j,'1');
 								}else{
-									if(plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+1)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+1)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+1)=='1'){
+									if(plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+1)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2+1)*(nbc+2)+1)=='1' && plateau.charAt((i/2)*(nbc+1)+(i/2)*(nbc+2)+1)=='1' && plateau.charAt((i/2+1)*(nbc+1)+(i/2)*(nbc+2)+2)=='1'){
 										replaceCharAt(plateau,(i/2+1)*(nbc+1)+(i/2)*(nbc+2)+2,'1');
 									}
 								}
@@ -179,6 +183,7 @@ public class Jeu {
 		}
 	}
 
+	//Retourne le nombre de carre complete d'un plateau
 	public int nbCarre(){
 		int nbCarre = 0;
 		for(int i=0; i<nbl*2-2;i+=2){
