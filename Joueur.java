@@ -9,12 +9,19 @@ public class Joueur implements Humain {
 
     //Constructeur
 
+    /**
+     * Initialise un nouveau joueur
+     */
     public Joueur(){
         carreObtenu = 0;
     }
 
     //Methodes
 
+    /**
+     * Demande a un joueur un numero de ligne et de colonne pour tracer un trait
+     * @param j Le jeu sur lequel l'on place un trait
+     */
     public void jouer(Jeu j){
         Scanner in = new Scanner (System.in);
         int nbCarreBefore = j.nbCarre();

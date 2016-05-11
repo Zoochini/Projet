@@ -9,6 +9,12 @@ import  java.io.*;
 public class GrapheSimple implements Graphe {
     TreeMap<Integer,Configuration> g;
 
+    //Constructeur
+
+    /**
+     * Initialse un graphe des configurations simple
+     * @param jeu Jeu a partir duquel on initialise le graphe
+     */
     public GrapheSimple(Jeu jeu){
         this.g = new TreeMap();
         Configuration initial = new ConfSimple(0,jeu);
@@ -16,6 +22,12 @@ public class GrapheSimple implements Graphe {
         this.defGraphe(0);
     }
 
+    //Methodes
+
+    /**
+     * Methode recursive qui ajoute chaque sommet des configurations dans l'arbre trier
+     * @param k Sommet dont on ajoute les successeurs non present dans l'arbre
+     */
     public void defGraphe(Integer k){
         if(k<g.size()){
             int j = g.size();
@@ -30,6 +42,12 @@ public class GrapheSimple implements Graphe {
         }
     }
 
+    /**
+     * Permet de generer le graphe des configurations simples sous forme de fichier au format .dot
+     * @param nbl Sert a definir le nom du fichier sous forme nblxnbc.dot
+     * @param nbc Sert a definir le nom du fichier sous forme nblxnbc.dot
+     * @throws IOException Au cas ou il y aurait des problemes avec le fichier
+     */
     public void toDot(int nbl, int nbc) throws IOException{
         File f = new File("C"+nbl+"x"+nbc+".dot");
         f.createNewFile();
@@ -55,6 +73,7 @@ public class GrapheSimple implements Graphe {
         pw.close();
     }
 
+    /*
     //A completer grace aux poids
     public void toPip(String type, int nbl, int nbc) throws IOException{
         File f = new File("C"+nbl+"x"+nbc+".pip");
@@ -63,5 +82,5 @@ public class GrapheSimple implements Graphe {
         if(type.equals("0")){
             pw.print()
         }
-    }
+    }*/
 }

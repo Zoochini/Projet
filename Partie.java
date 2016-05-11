@@ -37,7 +37,7 @@ public class Partie {
                         jouer(h,s,j);
                         break;
 
-                    case "-prevoyant" :
+                    /*case "-prevoyant" :
                         IA p = new Prevoyant();
                         j = DefJeu(args[2], args[3], args[4]);
                         j.jouer(h,p);
@@ -55,14 +55,13 @@ public class Partie {
                         IA po = new Pondere();
                         j = DefJeu(args[2],args[3],args[4]);
                         j.jouer(h,po);
-                        break;
+                        break;*/
 
                     //FIN DU CAS
 
                     default :
                         System.out.println("Mauvais parametre, réessayer avec de bons paramètres");
                         break;
-                break;
 
                 }
                 break;

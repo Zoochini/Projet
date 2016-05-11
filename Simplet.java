@@ -3,10 +3,17 @@ public class Simplet implements IA{
 
 	int carreObtenu;
 
+	/**
+	 * Initialise l'ia
+	 */
 	public Simplet(){
 		carreObtenu=0;
 	}
-	
+
+	/**
+	 * place un trait aleatoirement sur le plateau
+	 * @param jeu Jeu sur lequel on place un trait
+     */
 	public void jouer(Jeu jeu){
 		int nbVide=0;
 		int nbCarreBefore = jeu.nbCarre();
